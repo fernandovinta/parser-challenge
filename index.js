@@ -21,8 +21,14 @@ const app = express()
 app.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     async.parallel(functionArray, (err, results) => {
-        res.end(JSON.stringify(results));
+        let response = {}
+        results.forEach((item)=>{
+            response[Object.keys(item)[0]] = Object.values(item)[0]
+        })
+        res.end(JSON.stringify(response));
     });
 })
 
 app.listen(3000)
+
+module.exports = app;
